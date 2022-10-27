@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Models;
@@ -11,75 +12,108 @@ using SchoolProject.Models;
 namespace SchoolProject.MVC.Migrations
 {
     [DbContext(typeof(SchoolProjectDbContext))]
-    [Migration("20221026095245_CreateDatabase")]
-    partial class CreateDatabase
+    [Migration("20221027093102_CreateCourseData")]
+    partial class CreateCourseData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("SchoolProject.Models.Course", b =>
                 {
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"), 1L, 1);
 
                     b.Property<string>("CourseDescription")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CourseName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CourseId");
 
                     b.ToTable("Course");
+
+                    b.HasData(
+                        new
+                        {
+                            CourseId = 1,
+                            CourseDescription = "Introductory potions.",
+                            CourseName = "Potions 1a"
+                        },
+                        new
+                        {
+                            CourseId = 2,
+                            CourseDescription = "Introductory defensive magic.",
+                            CourseName = "Defence Against the Dark Arts 1a"
+                        });
                 });
 
             modelBuilder.Entity("SchoolProject.Models.School", b =>
                 {
                     b.Property<int>("SchoolId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SchoolId"), 1L, 1);
 
                     b.Property<string>("SchoolName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SchoolId");
 
                     b.ToTable("School");
+
+                    b.HasData(
+                        new
+                        {
+                            SchoolId = 1,
+                            SchoolName = "Hogwarts"
+                        });
                 });
 
             modelBuilder.Entity("SchoolProject.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
                     b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SchoolId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("UserTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int?>("YearGroup")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("SchoolId");
 
                     b.HasIndex("UserTypeId");
 
@@ -89,10 +123,10 @@ namespace SchoolProject.MVC.Migrations
             modelBuilder.Entity("SchoolProject.Models.UserCourse", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "CourseId");
 
@@ -105,11 +139,13 @@ namespace SchoolProject.MVC.Migrations
                 {
                     b.Property<int>("UserTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserTypeId"), 1L, 1);
 
                     b.Property<string>("UserTypeName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserTypeId");
 
@@ -118,11 +154,19 @@ namespace SchoolProject.MVC.Migrations
 
             modelBuilder.Entity("SchoolProject.Models.User", b =>
                 {
+                    b.HasOne("SchoolProject.Models.School", "School")
+                        .WithMany("Users")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SchoolProject.Models.UserType", "UserType")
                         .WithMany("Users")
                         .HasForeignKey("UserTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("School");
 
                     b.Navigation("UserType");
                 });
@@ -149,6 +193,11 @@ namespace SchoolProject.MVC.Migrations
             modelBuilder.Entity("SchoolProject.Models.Course", b =>
                 {
                     b.Navigation("UserCourses");
+                });
+
+            modelBuilder.Entity("SchoolProject.Models.School", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("SchoolProject.Models.User", b =>

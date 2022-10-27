@@ -3,11 +3,23 @@ using SchoolProject.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("Database") ?? "Data Source=Database.db";
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    var env = hostingContext.HostingEnvironment;
+
+    config.SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) //load base settings
+            .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true) //load local settings
+            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true) //load environment settings
+            .AddEnvironmentVariables();
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSqlite<SchoolProjectDbContext>(connectionString);
+builder.Services.AddDbContext<SchoolProjectDbContext>(opts => {
+    opts.UseSqlServer(
+        builder.Configuration["ConnectionStrings:SchoolProjectConnection"]);
+});
 
 var app = builder.Build();
 

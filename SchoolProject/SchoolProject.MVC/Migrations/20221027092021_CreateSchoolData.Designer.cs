@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Models;
 
@@ -11,9 +12,10 @@ using SchoolProject.Models;
 namespace SchoolProject.MVC.Migrations
 {
     [DbContext(typeof(SchoolProjectDbContext))]
-    partial class SchoolProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221027092021_CreateSchoolData")]
+    partial class CreateSchoolData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,20 +43,6 @@ namespace SchoolProject.MVC.Migrations
                     b.HasKey("CourseId");
 
                     b.ToTable("Course");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseId = 1,
-                            CourseDescription = "Introductory potions.",
-                            CourseName = "Potions 1a"
-                        },
-                        new
-                        {
-                            CourseId = 2,
-                            CourseDescription = "Introductory defensive magic.",
-                            CourseName = "Defence Against the Dark Arts 1a"
-                        });
                 });
 
             modelBuilder.Entity("SchoolProject.Models.School", b =>

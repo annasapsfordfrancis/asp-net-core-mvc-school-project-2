@@ -12,10 +12,27 @@ namespace SchoolProject.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Course
+            modelBuilder.Entity<Course>().Property(a => a.CourseName)
+                .IsRequired();
+
+            modelBuilder.Entity<Course>().Property(a => a.CourseDescription)
+                .IsRequired();
+
+            // School
+            modelBuilder.Entity<School>().Property(a => a.SchoolName)
+                .IsRequired();
+
+            // User
             modelBuilder.Entity<User>().HasOne(a => a.UserType)
                 .WithMany(a => a.Users)
                 .HasForeignKey(a => a.UserTypeId);
 
+            modelBuilder.Entity<User>().HasOne<School>(a => a.School)
+                .WithMany(a => a.Users)
+                .HasForeignKey(a => a.SchoolId);
+
+            // UserCourse
             modelBuilder.Entity<UserCourse>().HasKey(us => new { us.UserId, us.CourseId});
 
             modelBuilder.Entity<UserCourse>().HasOne(a => a.User)
@@ -25,6 +42,20 @@ namespace SchoolProject.Models
             modelBuilder.Entity<UserCourse>().HasOne(a => a.Course)
                 .WithMany(a => a.UserCourses)
                 .HasForeignKey(a => a.CourseId);
+
+            // UserType
+            modelBuilder.Entity<UserType>().Property(a => a.UserTypeName)
+                .IsRequired();
+
+            // Seed data
+            // School
+            modelBuilder.Entity<School>().HasData(
+                new { SchoolId = 1, SchoolName = "Hogwarts" });
+
+            // Course
+            modelBuilder.Entity<Course>().HasData(
+                new { CourseId = 1, CourseName = "Potions 1a", CourseDescription = "Introductory potions." },
+                new { CourseId = 2, CourseName = "Defence Against the Dark Arts 1a", CourseDescription = "Introductory defensive magic." });
         }
 
         public DbSet<User>? User { get; set; }

@@ -9,6 +9,7 @@ namespace SchoolProject.Models
         public DateTime? DateOfBirth { get; set; } = new DateTime();
         public int SchoolId { get; set; }
         public UserType? UserType { get; set; }
+        public School? School { get; set; }
         public ICollection<UserCourse>? UserCourses { get; set; }
     }
 }
