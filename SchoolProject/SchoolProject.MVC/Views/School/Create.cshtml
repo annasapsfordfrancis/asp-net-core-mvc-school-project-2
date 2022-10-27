@@ -1,0 +1,13 @@
+@using SchoolProject.Models
+@model School
+@{
+    ViewBag.Title = "New School";
+}
+<h1>@ViewBag.Title</h1>
+@using(Html.BeginForm()){
+    <div class="form-group">
+        @Html.LabelFor(model => model.SchoolName)
+        @Html.TextBoxFor(model => model.SchoolName, new { @class="form-control"})
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+}
