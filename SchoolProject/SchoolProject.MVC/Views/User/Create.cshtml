@@ -2,18 +2,61 @@
 @model AddUserViewModel
 
 @{
-    ViewData["Title"] = "Create User Page";
+    ViewData["Title"] = "New User";
 }
 
 <div class="text-center">
-    <h1 class="display-4">create user page</h1>
+    <h1 class="display-4">@ViewData["Title"]</h1>
     @using (Html.BeginForm())
     {
-        <select asp-items="@(new SelectList(Model.SchoolList, "SchoolId", "SchoolName", Model.User.SchoolId))" asp-for="@Model.User.SchoolId" class="form-control">
-            <option value="0">Please select an option</option>
-        </select>
+        <div asp-validation-summary="All"></div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserTypeList, new { @class = "form-label" })
+            <select asp-items="@(new SelectList(Model.UserTypeList, "UserTypeId", "UserTypeName", Model.User.UserTypeId))" asp-for="@Model.User.UserTypeId" class="form-control">
+                <option value="0">Please select an option</option>
+            </select>
+        </div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SchoolList, new { @class = "form-label" })
+            <select asp-items="@(new SelectList(Model.SchoolList, "SchoolId", "SchoolName", Model.User.SchoolId))" asp-for="@Model.User.SchoolId" class="form-control">
+                <option value="0">Please select an option</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.FirstName, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.User.FirstName, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.LastName, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.User.LastName, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.User.YearGroup, new { @class = "form-label" })
+            <select asp-for="@Model.User.YearGroup" class="form-control">
+                <option value="0">Please select an option</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
     }
 
 </div>
