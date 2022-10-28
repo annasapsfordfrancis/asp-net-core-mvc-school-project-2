@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using SchoolProject.Models;
+using SchoolProject.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,8 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IValidator<School>, SchoolValidator>();
+builder.Services.AddScoped<IValidator<Course>, CourseValidator>();
 builder.Services.AddDbContext<SchoolProjectDbContext>(opts => {
     opts.UseSqlServer(
         builder.Configuration["ConnectionStrings:SchoolProjectConnection"]);

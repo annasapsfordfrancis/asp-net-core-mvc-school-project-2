@@ -3,11 +3,21 @@
 @{
     ViewBag.Title = "Schools";
 }
-<h1>@ViewBag.Title</h1>
-<ul>
-    @foreach (var school in Model)
-    {
-        <li>@school.SchoolName</li>
-    }
-</ul>
-<div>@Html.ActionLink("New", "create")</div>
+<div>
+    <h1 class="display-4 text-center">@ViewBag.Title</h1>
+    <table class="table table-bordered table-striped table s-m">
+        <thead>
+            <tr><th>Name</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var school in Model)
+            {
+                <tr>
+                    <td>@school.SchoolName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="text-center">@Html.ActionLink("New", "create")</div>
+</div>
+
