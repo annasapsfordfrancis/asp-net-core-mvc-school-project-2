@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SchoolProject.Models;
-using SchoolProject.MVC.Models;
 
-namespace SchoolProject.MVC.Controllers
+namespace SchoolProject.Controllers
 {
-
-
- 
-
     public class UserController : Controller
     {
         private readonly SchoolProjectDbContext _context;
@@ -17,9 +13,14 @@ namespace SchoolProject.MVC.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            if (_context.User == null)
+            {
+                return NotFound();
+            }
+            var model = await _context.User.Include(m => m.School).Include(m => m.UserType).ToListAsync();
+            return View(model);
         }
 
 
@@ -28,7 +29,8 @@ namespace SchoolProject.MVC.Controllers
         {
             var viewModel = new AddUserViewModel {
                 User = new User { },
-                SchoolList = _context.School.ToList()
+                SchoolList = _context.School.ToList(),
+                UserTypeList = _context.UserType.ToList()
             };
 
 
@@ -36,9 +38,16 @@ namespace SchoolProject.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(User user)
+        public async Task<IActionResult> Create([Bind("UserTypeId","FirstName", "LastName", "YearGroup", "SchoolId")] User user)
         {
-            return View("Index");
+            if(ModelState.IsValid) {
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            } else {
+                return View();
+            }
+            
         }
     }
 }

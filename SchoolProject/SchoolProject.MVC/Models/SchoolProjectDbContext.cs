@@ -56,6 +56,11 @@ namespace SchoolProject.Models
             modelBuilder.Entity<Course>().HasData(
                 new { CourseId = 1, CourseName = "Potions 1a", CourseDescription = "Introductory potions." },
                 new { CourseId = 2, CourseName = "Defence Against the Dark Arts 1a", CourseDescription = "Introductory defensive magic." });
+
+            // UserType
+            modelBuilder.Entity<UserType>().HasData(
+                new { UserTypeId = 1, UserTypeName = "Teacher" },
+                new { UserTypeId = 2, UserTypeName = "Pupil" });
         }
 
         public DbSet<User>? User { get; set; }

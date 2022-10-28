@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Models;
 
@@ -11,9 +12,10 @@ using SchoolProject.Models;
 namespace SchoolProject.MVC.Migrations
 {
     [DbContext(typeof(SchoolProjectDbContext))]
-    partial class SchoolProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221028082617_CreateUserTypeData")]
+    partial class CreateUserTypeData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

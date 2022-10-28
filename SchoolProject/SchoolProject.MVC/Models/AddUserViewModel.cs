@@ -1,12 +1,16 @@
-﻿using SchoolProject.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace SchoolProject.MVC.Models
+namespace SchoolProject.Models
 {
     public class AddUserViewModel
     {
 
         public User User { get; set; }
+
+        [Display(Name = "School")]
         public List<School> SchoolList { get; set; }
-        public List<UserType> UserTypes { get; set; }
+
+        [Display(Name = "User Type")]
+        public List<UserType> UserTypeList { get; set; }
     }
 }
