@@ -25,6 +25,8 @@ namespace SchoolProject.Controllers
         {
             return View();
         }
+
+
         [HttpPost]
         public async Task<IActionResult> Create([Bind("CourseName","CourseDescription")] Course course)
         {
