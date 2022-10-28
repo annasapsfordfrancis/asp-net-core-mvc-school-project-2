@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidation.Results;
 using SchoolProject.Models;
 
 namespace SchoolProject.Controllers
@@ -7,9 +10,11 @@ namespace SchoolProject.Controllers
     public class UserController : Controller
     {
         private readonly SchoolProjectDbContext _context;
-        public UserController(SchoolProjectDbContext context)
+        private IValidator<User> _validator;
+        public UserController(SchoolProjectDbContext context, IValidator<User> validator)
         {
             _context = context;
+            _validator = validator;
         }
 
 
@@ -33,13 +38,19 @@ namespace SchoolProject.Controllers
                 UserTypeList = _context.UserType.ToList()
             };
 
-
             return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([Bind("UserTypeId","FirstName", "LastName", "YearGroup", "SchoolId")] User user)
         {
+            ValidationResult result = await _validator.ValidateAsync(user);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+                return View();
+            }
             _context.Add(user);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
