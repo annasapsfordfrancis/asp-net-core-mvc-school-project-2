@@ -40,14 +40,9 @@ namespace SchoolProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("UserTypeId","FirstName", "LastName", "YearGroup", "SchoolId")] User user)
         {
-            if(ModelState.IsValid) {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            } else {
-                return View();
-            }
-            
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

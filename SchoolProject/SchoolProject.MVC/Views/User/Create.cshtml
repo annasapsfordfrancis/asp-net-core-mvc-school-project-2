@@ -9,7 +9,6 @@
     <h1 class="display-4">@ViewData["Title"]</h1>
     @using (Html.BeginForm())
     {
-        <div asp-validation-summary="All"></div>
         <div class="form-group">
             @Html.LabelFor(model => model.UserTypeList, new { @class = "form-label" })
             <select asp-items="@(new SelectList(Model.UserTypeList, "UserTypeId", "UserTypeName", Model.User.UserTypeId))" asp-for="@Model.User.UserTypeId" class="form-control">
