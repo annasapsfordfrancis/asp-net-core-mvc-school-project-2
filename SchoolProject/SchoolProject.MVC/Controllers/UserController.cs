@@ -34,11 +34,7 @@ namespace SchoolProject.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var viewModel = new AddUserViewModel {
-                User = new User { },
-                SchoolList = _context.School.ToList(),
-                UserTypeList = _context.UserType.ToList()
-            };
+            var viewModel = BuildAddUserViewModel();
 
             return View(viewModel);
         }
@@ -51,12 +47,29 @@ namespace SchoolProject.Controllers
             if (!result.IsValid)
             {
                 result.AddToModelState(this.ModelState);
+                viewModel = BuildAddUserViewModel(viewModel);
                 return View(viewModel);
             }
             var user = viewModel.User;
             _context.Add(user);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public AddUserViewModel BuildAddUserViewModel(AddUserViewModel viewModel = null)
+        {
+            if (viewModel == null)
+            {
+                viewModel = new AddUserViewModel
+                {
+                    User = new User { },
+                };
+            }
+
+            viewModel.SchoolList = _context.School.ToList();
+            viewModel.UserTypeList = _context.UserType.ToList();
+
+            return viewModel;
         }
     }
 }
