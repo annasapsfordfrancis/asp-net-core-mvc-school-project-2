@@ -10,11 +10,13 @@ namespace SchoolProject.Controllers
     public class UserController : Controller
     {
         private readonly SchoolProjectDbContext _context;
-        private IValidator<User> _validator;
-        public UserController(SchoolProjectDbContext context, IValidator<User> validator)
+        private IValidator<User> _userValidator;
+        private IValidator<AddUserViewModel> _addUserViewModelValidator;
+        public UserController(SchoolProjectDbContext context, IValidator<User> userValidator, IValidator<AddUserViewModel> addUserViewModelValidator)
         {
             _context = context;
-            _validator = validator;
+            _userValidator = userValidator;
+            _addUserViewModelValidator = addUserViewModelValidator;
         }
 
 
@@ -42,15 +44,16 @@ namespace SchoolProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("UserTypeId","FirstName", "LastName", "YearGroup", "SchoolId")] User user)
+        public async Task<IActionResult> Create(AddUserViewModel viewModel)
         {
-            ValidationResult result = await _validator.ValidateAsync(user);
+            ValidationResult result = await _addUserViewModelValidator.ValidateAsync(viewModel);
 
             if (!result.IsValid)
             {
                 result.AddToModelState(this.ModelState);
-                return View();
+                return View(viewModel);
             }
+            var user = viewModel.User;
             _context.Add(user);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

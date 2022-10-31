@@ -21,6 +21,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IValidator<School>, SchoolValidator>();
 builder.Services.AddScoped<IValidator<Course>, CourseValidator>();
 builder.Services.AddScoped<IValidator<User>, UserValidator>();
+builder.Services.AddScoped<IValidator<AddUserViewModel>, AddUserViewModelValidator>();
 builder.Services.AddDbContext<SchoolProjectDbContext>(opts => {
     opts.UseSqlServer(
         builder.Configuration["ConnectionStrings:SchoolProjectConnection"]);
