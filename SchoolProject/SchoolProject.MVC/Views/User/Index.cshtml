@@ -19,6 +19,7 @@
                     <td>@user.FirstName</td>
                     <td>@user.LastName</td>
                     <td class="text-center">@user.YearGroup</td>
+                    <td><a asp-action="Details" asp-route-id="@user.UserId">View</a></td>
                 </tr>
             }
         </tbody>

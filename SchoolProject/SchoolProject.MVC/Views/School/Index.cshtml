@@ -13,7 +13,8 @@
             @foreach (var school in Model)
             {
                 <tr>
-                    <td>@school.SchoolName</td>
+                    <td>@school.SchoolName </td>
+                    <td><a asp-action="Details" asp-route-id="@school.SchoolId">View</a></td>
                 </tr>
             }
         </tbody>

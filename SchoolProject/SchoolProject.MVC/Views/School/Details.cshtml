@@ -1,0 +1,21 @@
+@using SchoolProject.Models
+
+@{
+    ViewData["Title"] = "School Details";
+}
+<div>
+    <h1 class="display-4 text-center">@ViewData["Title"]</h1>
+    <table class="table table-bordered table s-m">
+        <thead>
+            <tr><th>Name</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                    <td>@Model.SchoolName</td>
+                </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

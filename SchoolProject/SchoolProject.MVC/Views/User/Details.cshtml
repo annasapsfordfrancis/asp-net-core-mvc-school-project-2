@@ -1,0 +1,22 @@
+@using SchoolProject.Models
+
+@{
+    ViewData["Title"] = "User Details";
+}
+<div>
+    <h1 class="display-4 text-center">@ViewData["Title"]</h1>
+    <table class="table table-bordered table s-m">
+        <thead>
+            <tr><th>First Name</th><th>Last Name</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                    <td>@Model.FirstName</td>
+                    <td>@Model.LastName</td>
+                </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
