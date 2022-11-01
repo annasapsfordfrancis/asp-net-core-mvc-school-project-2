@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using SchoolProject.Models;
 using SchoolProject.Validators;
 
@@ -18,6 +19,10 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddFluentValidationAutoValidation(config =>
+{
+    config.DisableDataAnnotationsValidation = true;
+});
 builder.Services.AddScoped<IValidator<School>, SchoolValidator>();
 builder.Services.AddScoped<IValidator<Course>, CourseValidator>();
 builder.Services.AddScoped<IValidator<User>, UserValidator>();

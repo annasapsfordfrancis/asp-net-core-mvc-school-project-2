@@ -7,8 +7,8 @@ namespace SchoolProject.Validators
     {
         public CourseValidator()
         {
-            RuleFor(course => course.CourseName).NotNull().WithMessage("Please enter the course's name");
-            RuleFor(course => course.CourseDescription).NotNull().WithMessage("Please enter the course's description");
+            RuleFor(course => course.CourseName).NotNull().WithMessage("Please enter a course name");
+            RuleFor(course => course.CourseDescription).NotNull().WithMessage("Please enter a course description");
         }
     }
 }

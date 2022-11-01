@@ -7,12 +7,15 @@ namespace SchoolProject.Validators
     {
         public UserValidator()
         {
-            RuleFor(user => user.FirstName).NotNull().WithMessage("Please enter the user's first name");
-            RuleFor(user => user.LastName).NotNull().WithMessage("Please enter the user's last name");
-            RuleFor(user => user.FirstName).NotEmpty().WithMessage("Please enter the user's first name");
-            RuleFor(user => user.LastName).NotEmpty().WithMessage("Please enter the user's last name");
-            RuleFor(user => user.SchoolId).NotEqual(0).WithMessage("Please enter the user's school");
-            RuleFor(user => user.UserTypeId).NotEqual(0).WithMessage("Please enter the user's type");
+            RuleFor(user => user.FirstName)
+                .NotNull().WithMessage("Please enter a first name")
+                .NotEmpty().WithMessage("Please enter a first name");
+            RuleFor(user => user.LastName)
+                .NotNull().WithMessage("Please enter a last name")
+                .NotEmpty().WithMessage("Please enter a last name");
+
+            RuleFor(user => user.SchoolId).NotEqual(0).WithMessage("Please enter a school");
+            RuleFor(user => user.UserTypeId).NotEqual(0).WithMessage("Please enter a user type");
         }
     }
 }

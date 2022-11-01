@@ -6,10 +6,10 @@ namespace SchoolProject.Models
         public int CourseId { get; set; }
 
         [Display(Name = "Course Name")]
-        public string? CourseName { get; set; }
+        public string CourseName { get; set; } = "";
 
         [Display(Name = "Course Description")]
-        public string? CourseDescription { get; set; }
+        public string CourseDescription { get; set; } = "";
         public ICollection<UserCourse>? UserCourses { get; set; }
     }
 }

@@ -32,6 +32,12 @@ namespace SchoolProject.Models
                 .WithMany(a => a.Users)
                 .HasForeignKey(a => a.SchoolId);
 
+            modelBuilder.Entity<User>().Property(a => a.FirstName)
+                .IsRequired();
+
+            modelBuilder.Entity<User>().Property(a => a.LastName)
+                .IsRequired();
+
             // UserCourse
             modelBuilder.Entity<UserCourse>().HasKey(us => new { us.UserId, us.CourseId});
 

@@ -10,12 +10,10 @@ namespace SchoolProject.Controllers
     public class UserController : Controller
     {
         private readonly SchoolProjectDbContext _context;
-        private IValidator<User> _userValidator;
         private IValidator<AddUserViewModel> _addUserViewModelValidator;
-        public UserController(SchoolProjectDbContext context, IValidator<User> userValidator, IValidator<AddUserViewModel> addUserViewModelValidator)
+        public UserController(SchoolProjectDbContext context, IValidator<AddUserViewModel> addUserViewModelValidator)
         {
             _context = context;
-            _userValidator = userValidator;
             _addUserViewModelValidator = addUserViewModelValidator;
         }
 

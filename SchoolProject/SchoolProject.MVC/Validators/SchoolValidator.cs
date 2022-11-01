@@ -7,7 +7,7 @@ namespace SchoolProject.Validators
     {
         public SchoolValidator()
         {
-            RuleFor(school => school.SchoolName).NotNull().WithMessage("Please enter the school's name");
+            RuleFor(school => school.SchoolName).NotNull().WithMessage("Please enter a school name");
         }
     }
 
