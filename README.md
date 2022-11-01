@@ -13,5 +13,6 @@ Create `SchoolProject/SchoolProject.MVC/appsettings.local.json`
 Make sure you're in `SchoolProject/SchoolProject.MVC/`
 ```
 dotnet restore
+dotnet ef database update
 dotnet run
 ```

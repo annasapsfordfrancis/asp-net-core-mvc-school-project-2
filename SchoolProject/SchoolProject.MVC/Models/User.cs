@@ -7,10 +7,10 @@ namespace SchoolProject.Models
         public int UserTypeId { get; set; }
 
         [Display(Name = "First Name")]
-        public string FirstName { get; set; } = String.Empty;
+        public string FirstName { get; set; } = "";
 
         [Display(Name = "Last Name")]
-        public string LastName { get; set; } = String.Empty;
+        public string LastName { get; set; } = "";
 
         [Display(Name = "Year Group")]
         public int? YearGroup { get; set; }

@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidation.Results;
 using SchoolProject.Models;
 
 namespace SchoolProject.Controllers
@@ -7,9 +10,11 @@ namespace SchoolProject.Controllers
     public class UserController : Controller
     {
         private readonly SchoolProjectDbContext _context;
-        public UserController(SchoolProjectDbContext context)
+        private IValidator<AddUserViewModel> _addUserViewModelValidator;
+        public UserController(SchoolProjectDbContext context, IValidator<AddUserViewModel> addUserViewModelValidator)
         {
             _context = context;
+            _addUserViewModelValidator = addUserViewModelValidator;
         }
 
 
@@ -27,22 +32,42 @@ namespace SchoolProject.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var viewModel = new AddUserViewModel {
-                User = new User { },
-                SchoolList = _context.School.ToList(),
-                UserTypeList = _context.UserType.ToList()
-            };
-
+            var viewModel = BuildAddUserViewModel();
 
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("UserTypeId","FirstName", "LastName", "YearGroup", "SchoolId")] User user)
+        public async Task<IActionResult> Create(AddUserViewModel viewModel)
         {
+            ValidationResult result = await _addUserViewModelValidator.ValidateAsync(viewModel);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+                viewModel = BuildAddUserViewModel(viewModel);
+                return View(viewModel);
+            }
+            var user = viewModel.User;
             _context.Add(user);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public AddUserViewModel BuildAddUserViewModel(AddUserViewModel viewModel = null)
+        {
+            if (viewModel == null)
+            {
+                viewModel = new AddUserViewModel
+                {
+                    User = new User { },
+                };
+            }
+
+            viewModel.SchoolList = _context.School.ToList();
+            viewModel.UserTypeList = _context.UserType.ToList();
+
+            return viewModel;
         }
     }
 }

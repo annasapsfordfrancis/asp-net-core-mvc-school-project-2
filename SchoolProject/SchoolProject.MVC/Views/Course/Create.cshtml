@@ -5,13 +5,20 @@
 }
 <h1>@ViewBag.Title</h1>
 @using(Html.BeginForm()){
-    <div class="form-group">
-        @Html.LabelFor(model => model.CourseName)
-        @Html.TextBoxFor(model => model.CourseName, new { @class="form-control"})
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group mb-2">
+                @Html.LabelFor(model => model.CourseName)
+                @Html.TextBoxFor(model => model.CourseName, new { @class="form-control"})
+                <span asp-validation-for="CourseName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                @Html.LabelFor(model => model.CourseDescription)
+                @Html.TextBoxFor(model => model.CourseDescription, new { @class="form-control"})
+                <span asp-validation-for="CourseDescription" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.CourseDescription)
-        @Html.TextBoxFor(model => model.CourseDescription, new { @class="form-control"})
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
 }
