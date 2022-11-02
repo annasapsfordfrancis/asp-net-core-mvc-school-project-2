@@ -15,7 +15,7 @@
                 <tr>
                     <td>@course.CourseName</td>
                     <td>@course.CourseDescription</td>
-                    <td><a asp-action="Details" asp-route-id="@course.CourseId">View</a></td>
+                    <td><a asp-action="Details" asp-route-id="@course.CourseId">View</a> | <a asp-action="Delete" asp-route-id="@course.CourseId">Delete</a></td>
                 </tr>
             }
         </tbody>

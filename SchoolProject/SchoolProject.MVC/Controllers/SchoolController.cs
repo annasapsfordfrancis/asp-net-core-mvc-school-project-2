@@ -66,5 +66,31 @@ namespace SchoolProject.Controllers
             return View(school);
         }
         
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var school = await _context.School
+                .FirstOrDefaultAsync(m => m.SchoolId == id);
+            if (school == null)
+            {
+                return NotFound();
+            }
+
+            return View(school);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var school = await _context.School.FindAsync(id);
+            _context.School.Remove(school);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
