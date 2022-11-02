@@ -84,7 +84,10 @@ namespace SchoolProject.Controllers
                 return NotFound();
             }
 
-            return View(user);
+            var viewModel = BuildAddUserViewModel();
+            viewModel.User = user;
+
+            return View(viewModel);
         }
     }
 }

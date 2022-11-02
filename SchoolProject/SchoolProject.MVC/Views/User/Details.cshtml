@@ -1,5 +1,5 @@
 @using SchoolProject.Models
-
+@model AddUserViewModel
 @{
     ViewData["Title"] = "User Details";
 }
@@ -7,12 +7,14 @@
     <h1 class="display-4 text-center">@ViewData["Title"]</h1>
     <table class="table table-bordered table s-m">
         <thead>
-            <tr><th>First Name</th><th>Last Name</th></tr>
+            <tr><th>School</th><th>User Type</th><th>First Name</th><th>Last Name</th></tr>
         </thead>
         <tbody>
             <tr>
-                    <td>@Model.FirstName</td>
-                    <td>@Model.LastName</td>
+                    <td>@Model.User.School.SchoolName</td>
+                    <td>@Model.User.UserType.UserTypeName</td>
+                    <td>@Model.User.FirstName</td>
+                    <td>@Model.User.LastName</td>
                 </tr>
         </tbody>
     </table>
