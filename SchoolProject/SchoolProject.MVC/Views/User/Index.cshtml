@@ -8,21 +8,27 @@
     <h1 class="display-4 text-center">@ViewData["Title"]</h1>
     <table class="table table-bordered table-striped table s-m">
         <thead>
-            <tr><th>School</th><th>User Type</th><th>First Name</th><th>Last Name</th><th>Year Group</th></tr>
+            <tr><th>First Name</th><th>Last Name</th><th>User Type</th><th>School</th><th>Year Group</th><th></th></th></tr>
         </thead>
         <tbody>
             @foreach (var user in Model)
             {
                 <tr>
-                    <td>@user.School.SchoolName</td>
-                    <td>@user.UserType.UserTypeName</td>
                     <td>@user.FirstName</td>
                     <td>@user.LastName</td>
-                    <td class="text-center">@user.YearGroup</td>
+                    <td>@user.UserType.UserTypeName</td>
+                    <td>@user.School.SchoolName</td>
+                    <td>@if (user.YearGroup != 0)
+                                                {
+                                                    <span>@user.YearGroup</span>
+                                                }
+                                                </td>
+                    <td><a asp-action="Details" asp-route-id="@user.UserId">View</a></td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <div class="text-center">@Html.ActionLink("New", "Create")</div>
+
+    <div class="text-center"><a asp-controller="UserController" asp-action="Create" class="btn btn-secondary">New</a></div>
 </div>

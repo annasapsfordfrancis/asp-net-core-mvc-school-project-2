@@ -35,7 +35,7 @@ namespace SchoolProject.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("CourseName","CourseDescription")] Course course)
+        public async Task<IActionResult> Create(Course course)
         {
             ValidationResult result = await _validator.ValidateAsync(course);
 
@@ -47,6 +47,23 @@ namespace SchoolProject.Controllers
             _context.Add(course);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Course
+                .FirstOrDefaultAsync(m => m.CourseId == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return View(course);
         }
     }
 }

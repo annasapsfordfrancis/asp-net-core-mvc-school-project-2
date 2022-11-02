@@ -69,5 +69,25 @@ namespace SchoolProject.Controllers
 
             return viewModel;
         }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.User
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = BuildAddUserViewModel();
+            viewModel.User = user;
+
+            return View(viewModel);
+        }
     }
 }
