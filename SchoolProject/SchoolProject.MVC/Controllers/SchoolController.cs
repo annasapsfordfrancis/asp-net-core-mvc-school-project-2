@@ -35,7 +35,7 @@ namespace SchoolProject.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("SchoolName")] School school)
+        public async Task<IActionResult> Create(School school)
         {
             ValidationResult result = await _validator.ValidateAsync(school);
 

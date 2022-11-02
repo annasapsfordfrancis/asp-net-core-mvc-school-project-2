@@ -7,7 +7,7 @@
     <h1 class="display-4 text-center">@ViewBag.Title</h1>
     <table class="table table-bordered table-striped table s-m">
         <thead>
-            <tr><th>Name</th><th>Description</th></tr>
+            <tr><th>Name</th><th>Description</th><th></th></tr>
         </thead>
         <tbody>
             @foreach (var course in Model)
@@ -20,6 +20,6 @@
             }
         </tbody>
     </table>
-    <div class="text-center">@Html.ActionLink("New", "create")</div>
+    <div class="text-center"><a asp-controller="CourseController" asp-action="Create" class="btn btn-secondary">New</a></div>
 </div>
 
