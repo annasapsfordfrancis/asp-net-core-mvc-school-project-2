@@ -42,11 +42,12 @@ namespace SchoolProject.Controllers
             if (!result.IsValid)
             {
                 result.AddToModelState(this.ModelState);
-                return View("Create", school);
+                return View(school);
             }
-            _context.Add(school);
+            _context.Update(school);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -66,6 +67,37 @@ namespace SchoolProject.Controllers
             return View(school);
         }
         
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var school = await _context.School.FindAsync(id);
+            if (school == null)
+            {
+                return NotFound();
+            }
+            return View(school);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(School school)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Update(school);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(school);
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

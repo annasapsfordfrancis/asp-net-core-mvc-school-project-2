@@ -66,6 +66,39 @@ namespace SchoolProject.Controllers
             return View(course);
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Course.FindAsync(id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            return View(course);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Course course)
+        {
+            ValidationResult result = await _validator.ValidateAsync(course);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+                return View(course);
+            }
+            _context.Update(course);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

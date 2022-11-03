@@ -18,8 +18,14 @@ namespace SchoolProject.Validators
                 .MinimumLength(3).WithMessage("The last name must have at least 3 characters")
                 .MaximumLength(30).WithMessage("The last name mustn't have more than 30 characters");
 
-            RuleFor(user => user.SchoolId).NotEqual(0).WithMessage("Please enter a school");
-            RuleFor(user => user.UserTypeId).NotEqual(0).WithMessage("Please enter a user type");
+            RuleFor(user => user.SchoolId)
+                .NotEqual(0).WithMessage("Please enter a school")
+                .NotNull().WithMessage("Please enter a school")
+                .NotEmpty().WithMessage("Please enter a school");
+            RuleFor(user => user.UserTypeId)
+                .NotEqual(0).WithMessage("Please enter a user type")
+                .NotNull().WithMessage("Please enter a user type")
+                .NotEmpty().WithMessage("Please enter a user type");
         }
     }
 }

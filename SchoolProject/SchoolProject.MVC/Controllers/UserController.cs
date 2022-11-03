@@ -90,6 +90,43 @@ namespace SchoolProject.Controllers
             return View(viewModel);
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.User.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = BuildAddUserViewModel();
+            viewModel.User = user;
+
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(AddUserViewModel viewModel)
+        {
+            ValidationResult result = await _addUserViewModelValidator.ValidateAsync(viewModel);
+
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+                viewModel = BuildAddUserViewModel(viewModel);
+                return View(viewModel);
+            }
+            _context.Update(viewModel.User);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

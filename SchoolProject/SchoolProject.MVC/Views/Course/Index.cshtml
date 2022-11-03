@@ -15,11 +15,11 @@
                 <tr>
                     <td>@course.CourseName</td>
                     <td>@course.CourseDescription</td>
-                    <td><a asp-action="Details" asp-route-id="@course.CourseId">View</a> | <a asp-action="Delete" asp-route-id="@course.CourseId">Delete</a></td>
+                    <td><a asp-action="Details" asp-route-id="@course.CourseId">View</a> | <a asp-action="Edit" asp-route-id="@course.CourseId">Edit</a> | <a asp-action="Delete" asp-route-id="@course.CourseId">Delete</a></td>
                 </tr>
             }
         </tbody>
     </table>
-    <div class="text-center"><a asp-controller="CourseController" asp-action="Create" class="btn btn-secondary">New</a></div>
+    <div class="text-center"><a asp-controller="Course" asp-action="Create" class="btn btn-secondary">New</a></div>
 </div>
 
