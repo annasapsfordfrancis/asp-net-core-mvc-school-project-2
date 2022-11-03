@@ -1,7 +1,7 @@
 using FluentValidation;
 using SchoolProject.Models;
 
-namespace SchoolProject.Validators
+namespace SchoolProject.Services.Validators
 {
     public class SchoolValidator : AbstractValidator<School>
     {

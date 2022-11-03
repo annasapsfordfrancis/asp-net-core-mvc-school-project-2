@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Models;
+using SchoolProject.Data;
 
 #nullable disable
 
-namespace SchoolProject.MVC.Migrations
+namespace SchoolProject.Data.Migrations
 {
     [DbContext(typeof(SchoolProjectDbContext))]
-    [Migration("20221027092021_CreateSchoolData")]
-    partial class CreateSchoolData
+    [Migration("20221027085219_CreateUserSchoolFKConstraint")]
+    partial class CreateUserSchoolFKConstraint
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,13 +61,6 @@ namespace SchoolProject.MVC.Migrations
                     b.HasKey("SchoolId");
 
                     b.ToTable("School");
-
-                    b.HasData(
-                        new
-                        {
-                            SchoolId = 1,
-                            SchoolName = "Hogwarts"
-                        });
                 });
 
             modelBuilder.Entity("SchoolProject.Models.User", b =>

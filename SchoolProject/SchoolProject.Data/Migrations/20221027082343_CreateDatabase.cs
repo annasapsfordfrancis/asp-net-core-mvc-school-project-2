@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SchoolProject.MVC.Migrations
+namespace SchoolProject.Data.Migrations
 {
     public partial class CreateDatabase : Migration
     {

@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using SchoolProject.Models;
-using SchoolProject.Validators;
+using SchoolProject.Data;
+using SchoolProject.Services.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -4,8 +4,9 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using SchoolProject.Models;
+using SchoolProject.Data;
 
-namespace SchoolProject.Controllers
+namespace SchoolProject.MVC.Controllers
 {
     public class CourseController : Controller
     {

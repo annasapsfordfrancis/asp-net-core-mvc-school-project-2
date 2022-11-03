@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Models;
+using SchoolProject.Data;
 
 #nullable disable
 
-namespace SchoolProject.MVC.Migrations
+namespace SchoolProject.Data.Migrations
 {
     [DbContext(typeof(SchoolProjectDbContext))]
-    [Migration("20221028082617_CreateUserTypeData")]
-    partial class CreateUserTypeData
+    [Migration("20221027092021_CreateSchoolData")]
+    partial class CreateSchoolData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,20 +44,6 @@ namespace SchoolProject.MVC.Migrations
                     b.HasKey("CourseId");
 
                     b.ToTable("Course");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseId = 1,
-                            CourseDescription = "Introductory potions.",
-                            CourseName = "Potions 1a"
-                        },
-                        new
-                        {
-                            CourseId = 2,
-                            CourseDescription = "Introductory defensive magic.",
-                            CourseName = "Defence Against the Dark Arts 1a"
-                        });
                 });
 
             modelBuilder.Entity("SchoolProject.Models.School", b =>
@@ -150,18 +137,6 @@ namespace SchoolProject.MVC.Migrations
                     b.HasKey("UserTypeId");
 
                     b.ToTable("UserType");
-
-                    b.HasData(
-                        new
-                        {
-                            UserTypeId = 1,
-                            UserTypeName = "Teacher"
-                        },
-                        new
-                        {
-                            UserTypeId = 2,
-                            UserTypeName = "Pupil"
-                        });
                 });
 
             modelBuilder.Entity("SchoolProject.Models.User", b =>

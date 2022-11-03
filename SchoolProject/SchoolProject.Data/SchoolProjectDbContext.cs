@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-namespace SchoolProject.Models
+using SchoolProject.Models;
+
+namespace SchoolProject.Data
 {
     public class SchoolProjectDbContext : DbContext
     {

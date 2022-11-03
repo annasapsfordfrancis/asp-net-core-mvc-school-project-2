@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace SchoolProject.MVC.Migrations
+namespace SchoolProject.Data.Migrations
 {
     public partial class CreateUserTypeData : Migration
     {

@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Models;
+using SchoolProject.Data;
 
 #nullable disable
 
-namespace SchoolProject.MVC.Migrations
+namespace SchoolProject.Data.Migrations
 {
     [DbContext(typeof(SchoolProjectDbContext))]
     partial class SchoolProjectDbContextModelSnapshot : ModelSnapshot

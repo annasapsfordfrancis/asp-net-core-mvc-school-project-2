@@ -9,7 +9,7 @@ using SchoolProject.Models;
 
 #nullable disable
 
-namespace SchoolProject.MVC.Migrations
+namespace SchoolProject.Data.Migrations
 {
     [DbContext(typeof(SchoolProjectDbContext))]
     [Migration("20221027082343_CreateDatabase")]
