@@ -1,10 +1,10 @@
 @using SchoolProject.Models
 @model IEnumerable<School>
 @{
-    ViewBag.Title = "Schools";
+    ViewData["Title"] = "Schools";
 }
 <div>
-    <h1 class="display-4 text-center">@ViewBag.Title</h1>
+    <h1 class="display-4 text-center">@ViewData["Title"]</h1>
     <table class="table table-bordered table-striped table s-m">
         <thead>
             <tr><th>Name</th><th></th></tr>
@@ -14,10 +14,10 @@
             {
                 <tr>
                     <td>@school.SchoolName </td>
-                    <td><a asp-action="Details" asp-route-id="@school.SchoolId">View</a> | <a asp-action="Delete" asp-route-id="@school.SchoolId">Delete</a></td>
+                    <td><a asp-action="Details" asp-route-id="@school.SchoolId">View</a> | <a asp-action="Edit" asp-route-id="@school.SchoolId">Edit</a> | <a asp-action="Delete" asp-route-id="@school.SchoolId">Delete</a></td>
                 </tr>
             }
         </tbody>
     </table>
-    <div class="text-center"><a asp-controller="SchoolController" asp-action="Create" class="btn btn-secondary">New</a></div>
+    <div class="text-center"><a asp-controller="School" asp-action="Create" class="btn btn-secondary">New</a></div>
 </div>
