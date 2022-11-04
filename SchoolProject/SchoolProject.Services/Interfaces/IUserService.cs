@@ -1,14 +1,16 @@
 ﻿using SchoolProject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SchoolProject.Services.Interfaces
 {
     public interface IUserService
     {
-        AddUserViewModel BuildAddUserViewModel(AddUserViewModel viewModel = null);
+        UserViewModel BuildUserViewModel(UserViewModel viewModel = null);
+        Task<ActionResult> AddUser(User user);
+        Task<ActionResult> EditUser(User user);
+        Task<ActionResult> DeleteUser(int id);
+        Task<User> GetUser(int id);
+        Task<List<User>> GetUsers();
+        Task<UserViewModel> GetUserViewModel(int id);
     }
 }

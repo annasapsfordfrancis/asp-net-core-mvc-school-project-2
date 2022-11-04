@@ -1,30 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using SchoolProject.Models;
-using SchoolProject.Data;
+using SchoolProject.Services.Interfaces;
 
 namespace SchoolProject.MVC.Controllers
 {
     public class SchoolController : Controller
     {
-        private readonly SchoolProjectDbContext _context;
         private IValidator<School> _validator;
-        public SchoolController(SchoolProjectDbContext context, IValidator<School> validator)
+        private ISchoolService _schoolService;
+        public SchoolController(IValidator<School> validator, ISchoolService schoolService)
         {
-            _context = context;
             _validator = validator;
+            _schoolService = schoolService;
         }
         public async Task<ActionResult> Index()
         {
-            if (_context.School == null)
-            {
-                return NotFound();
-            }
-            var model = await _context.School.ToListAsync();
-            return View(model);
+            var schools = await _schoolService.GetSchools();
+            
+            return View(schools);
         }
 
         
@@ -45,21 +41,16 @@ namespace SchoolProject.MVC.Controllers
                 result.AddToModelState(this.ModelState);
                 return View(school);
             }
-            _context.Update(school);
-            await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            await _schoolService.AddSchool(school);
+
+            return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var school = await _schoolService.GetSchool(id);
 
-            var school = await _context.School
-                .FirstOrDefaultAsync(m => m.SchoolId == id);
             if (school == null)
             {
                 return NotFound();
@@ -69,14 +60,10 @@ namespace SchoolProject.MVC.Controllers
         }
         
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var school = await _schoolService.GetSchool(id);
 
-            var school = await _context.School.FindAsync(id);
             if (school == null)
             {
                 return NotFound();
@@ -89,25 +76,22 @@ namespace SchoolProject.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(School school)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Update(school);
-                await _context.SaveChangesAsync();
+            ValidationResult result = await _validator.ValidateAsync(school);
 
-                return RedirectToAction(nameof(Index));
+            if (!result.IsValid)
+            {
+                result.AddToModelState(this.ModelState);
+                return View(school);
             }
-            return View(school);
+            await _schoolService.EditSchool(school);
+
+            return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var school = await _schoolService.GetSchool(id);
 
-            var school = await _context.School
-                .FirstOrDefaultAsync(m => m.SchoolId == id);
             if (school == null)
             {
                 return NotFound();
@@ -120,10 +104,9 @@ namespace SchoolProject.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var school = await _context.School.FindAsync(id);
-            _context.School.Remove(school);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            await _schoolService.DeleteSchool(id);
+
+            return RedirectToAction("Index");
         }
     }
 }

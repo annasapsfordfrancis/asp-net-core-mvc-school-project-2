@@ -2,7 +2,7 @@
 
 namespace SchoolProject.Models
 {
-    public class AddUserViewModel
+    public class UserViewModel
     {
 
         public User User { get; set; }

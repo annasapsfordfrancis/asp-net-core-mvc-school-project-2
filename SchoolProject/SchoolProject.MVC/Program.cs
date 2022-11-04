@@ -29,9 +29,11 @@ builder.Services.AddFluentValidationAutoValidation(config =>
 builder.Services.AddScoped<IValidator<School>, SchoolValidator>();
 builder.Services.AddScoped<IValidator<Course>, CourseValidator>();
 builder.Services.AddScoped<IValidator<User>, UserValidator>();
-builder.Services.AddScoped<IValidator<AddUserViewModel>, AddUserViewModelValidator>();
+builder.Services.AddScoped<IValidator<UserViewModel>, UserViewModelValidator>();
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<ISchoolService, SchoolService>();
 builder.Services.AddDbContext<SchoolProjectDbContext>(opts => {
     opts.UseSqlServer(
         builder.Configuration["ConnectionStrings:SchoolProjectConnection"]);
