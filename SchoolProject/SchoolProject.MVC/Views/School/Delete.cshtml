@@ -8,14 +8,7 @@
 <div>
     <h1 class="display-4 text-center">@ViewData["Title"]</h1>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SchoolName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SchoolName)
-        </dd>
-    </dl>
+    <partial name="_SchoolInfoPartial" for="@Model" />
     
     <form asp-action="Delete">
         <a asp-action="Index" class="btn btn-secondary">Cancel</a>

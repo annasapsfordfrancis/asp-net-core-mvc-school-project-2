@@ -31,9 +31,10 @@ builder.Services.AddScoped<IValidator<Course>, CourseValidator>();
 builder.Services.AddScoped<IValidator<User>, UserValidator>();
 builder.Services.AddScoped<IValidator<UserViewModel>, UserViewModelValidator>();
 
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ISchoolService, SchoolService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddDbContext<SchoolProjectDbContext>(opts => {
     opts.UseSqlServer(
         builder.Configuration["ConnectionStrings:SchoolProjectConnection"]);

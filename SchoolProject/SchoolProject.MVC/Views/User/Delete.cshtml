@@ -1,5 +1,4 @@
-@using SchoolProject.Models
-@model UserViewModel
+@model SchoolProject.Models.UserViewModel
 
 @{
     ViewData["Title"] = "Delete User";
@@ -8,32 +7,7 @@
 <div>
     <h1 class="display-4 text-center">@ViewData["Title"]</h1>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User.UserType.UserTypeName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.UserType.UserTypeName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User.School.SchoolName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.School.SchoolName)
-        </dd>
-    </dl>
+    <partial name="_UserInfoPartial" for="@Model" />
     
     <form asp-action="Delete">
         <a asp-action="Index" class="btn btn-secondary">Cancel</a>
