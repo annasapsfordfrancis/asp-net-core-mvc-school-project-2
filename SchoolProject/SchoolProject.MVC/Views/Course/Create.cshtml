@@ -4,11 +4,11 @@
     ViewData["Title"] = "New Course";
 }
 <h1>@ViewData["Title"]</h1>
-    <div asp-validation-summary="ModelOnly"></div>
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <partial name="_CourseFormPartial" for="@Model" />
-            </form>
-        </div>
+<div asp-validation-summary="ModelOnly"></div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <partial name="_CourseFormPartial" for="@Model" />
+        </form>
     </div>
+</div>
