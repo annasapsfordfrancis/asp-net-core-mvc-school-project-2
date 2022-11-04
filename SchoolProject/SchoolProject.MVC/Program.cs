@@ -4,6 +4,8 @@ using FluentValidation.AspNetCore;
 using SchoolProject.Models;
 using SchoolProject.Data;
 using SchoolProject.Services.Validators;
+using SchoolProject.Services.Interfaces;
+using SchoolProject.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,8 @@ builder.Services.AddScoped<IValidator<School>, SchoolValidator>();
 builder.Services.AddScoped<IValidator<Course>, CourseValidator>();
 builder.Services.AddScoped<IValidator<User>, UserValidator>();
 builder.Services.AddScoped<IValidator<AddUserViewModel>, AddUserViewModelValidator>();
+
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddDbContext<SchoolProjectDbContext>(opts => {
     opts.UseSqlServer(
         builder.Configuration["ConnectionStrings:SchoolProjectConnection"]);

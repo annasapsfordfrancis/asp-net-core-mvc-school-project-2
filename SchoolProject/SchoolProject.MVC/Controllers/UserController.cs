@@ -5,6 +5,7 @@ using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using SchoolProject.Models;
 using SchoolProject.Data;
+using SchoolProject.Services.Interfaces;
 
 namespace SchoolProject.MVC.Controllers
 {
@@ -12,10 +13,12 @@ namespace SchoolProject.MVC.Controllers
     {
         private readonly SchoolProjectDbContext _context;
         private IValidator<AddUserViewModel> _addUserViewModelValidator;
-        public UserController(SchoolProjectDbContext context, IValidator<AddUserViewModel> addUserViewModelValidator)
+        private IUserService _userService;
+        public UserController(SchoolProjectDbContext context, IValidator<AddUserViewModel> addUserViewModelValidator, IUserService userService)
         {
             _context = context;
             _addUserViewModelValidator = addUserViewModelValidator;
+            _userService = userService;
         }
 
 
@@ -33,7 +36,7 @@ namespace SchoolProject.MVC.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var viewModel = BuildAddUserViewModel();
+            var viewModel = _userService.BuildAddUserViewModel();
 
             return View(viewModel);
         }
@@ -46,7 +49,7 @@ namespace SchoolProject.MVC.Controllers
             if (!result.IsValid)
             {
                 result.AddToModelState(this.ModelState);
-                viewModel = BuildAddUserViewModel(viewModel);
+                viewModel = _userService.BuildAddUserViewModel(viewModel);
                 return View(viewModel);
             }
             var user = viewModel.User;
@@ -55,21 +58,7 @@ namespace SchoolProject.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        public AddUserViewModel BuildAddUserViewModel(AddUserViewModel viewModel = null)
-        {
-            if (viewModel == null)
-            {
-                viewModel = new AddUserViewModel
-                {
-                    User = new User { },
-                };
-            }
 
-            viewModel.SchoolList = _context.School.ToList();
-            viewModel.UserTypeList = _context.UserType.ToList();
-
-            return viewModel;
-        }
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -85,7 +74,7 @@ namespace SchoolProject.MVC.Controllers
                 return NotFound();
             }
 
-            var viewModel = BuildAddUserViewModel();
+            var viewModel = _userService.BuildAddUserViewModel();
             viewModel.User = user;
 
             return View(viewModel);
@@ -104,7 +93,7 @@ namespace SchoolProject.MVC.Controllers
                 return NotFound();
             }
 
-            var viewModel = BuildAddUserViewModel();
+            var viewModel = _userService.BuildAddUserViewModel();
             viewModel.User = user;
 
             return View(viewModel);
@@ -120,7 +109,7 @@ namespace SchoolProject.MVC.Controllers
             if (!result.IsValid)
             {
                 result.AddToModelState(this.ModelState);
-                viewModel = BuildAddUserViewModel(viewModel);
+                viewModel = _userService.BuildAddUserViewModel(viewModel);
                 return View(viewModel);
             }
             _context.Update(viewModel.User);
@@ -142,7 +131,7 @@ namespace SchoolProject.MVC.Controllers
                 return NotFound();
             }
 
-            var viewModel = BuildAddUserViewModel();
+            var viewModel = _userService.BuildAddUserViewModel();
             viewModel.User = user;
 
             return View(viewModel);
