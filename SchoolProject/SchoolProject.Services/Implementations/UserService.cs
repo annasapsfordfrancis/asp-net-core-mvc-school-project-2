@@ -98,7 +98,7 @@ namespace SchoolProject.Services.Implementations
             return viewModel;
         }
 
-        private async Task<List<User>> GetFilteredUsers(int? schoolId, int? userTypeId)
+        public async Task<List<User>> GetFilteredUsers(int? schoolId, int? userTypeId)
         {
             var filteredUserList = new List<User>();
 

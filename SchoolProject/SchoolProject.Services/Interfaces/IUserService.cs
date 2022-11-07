@@ -13,5 +13,6 @@ namespace SchoolProject.Services.Interfaces
         Task<List<User>> GetUsers();
         Task<UserViewModel> GetUserViewModel(int id);
        Task<UserListViewModel> GetUserListViewModel(UserListViewModel viewModel = null);
+       Task<List<User>> GetFilteredUsers(int? schoolId, int? userTypeId);
     }
 }

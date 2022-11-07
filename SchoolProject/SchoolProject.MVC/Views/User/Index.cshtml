@@ -6,18 +6,18 @@
 
 <div>
     <h1 class="display-4 text-center">@ViewData["Title"]</h1>
-    <form asp-action="Index">
+    <form>
         <div class="row">
             <div class="col">
                 <div class="form-group">
                     <label asp-for="@Model.SelectedSchoolId" class="control-label float-start">School</label>
-                    <select asp-items="@(new SelectList(Model.SchoolList, "SchoolId", "SchoolName", Model.SelectedSchoolId))" asp-for="@Model.SelectedSchoolId" class="form-control">
+                    <select id="SchoolSelect" asp-items="@(new SelectList(Model.SchoolList, "SchoolId", "SchoolName", Model.SelectedSchoolId))" asp-for="@Model.SelectedSchoolId" class="form-control">
                         <option value="0">Select Option</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label asp-for="@Model.SelectedUserTypeId" class="control-label float-start">User Type</label>
-                    <select asp-items="@(new SelectList(Model.UserTypeList, "UserTypeId", "UserTypeName", Model.SelectedUserTypeId))" asp-for="@Model.SelectedUserTypeId" class="form-control">
+                    <select id="UserTypeSelect" asp-items="@(new SelectList(Model.UserTypeList, "UserTypeId", "UserTypeName", Model.SelectedUserTypeId))" asp-for="@Model.SelectedUserTypeId" class="form-control">
                         <option value="0">Select Option</option>
                     </select>
                 </div>
@@ -25,7 +25,7 @@
         </div>
         <div class="row justify-content-end mt-3">
             <div class="col">
-                <button type="submit" class="btn btn-primary float-end ms-3">Search</button>
+                <button id="searchButton" class="btn btn-primary float-end ms-3">Search</button>
             </div>
         </div>
     </form>
@@ -35,3 +35,24 @@
 
     <div class="text-center"><a asp-controller="User" asp-action="Create" class="btn btn-secondary">New</a></div>
 </div>
+
+<script>
+    function filterResults(event)
+    {
+        event.preventDefault();
+        let selectedSchool = document.querySelector('#SchoolSelect').value
+        let selectedUserType = document.querySelector('#UserTypeSelect').value
+
+        console.log(`selectedSchool: ${selectedSchool}`);
+        console.log(`selectedUserType: ${selectedUserType}`);
+
+        fetch("@Url.Action("FilterUserResultsTable", "User")?schoolId=4&userTypeId=2")
+        .then((response) => { return response.text(); })
+        .then((result) => {
+                console.log(result);
+                document.querySelector('#filteredUsers').innerHTML = result;
+        });
+    }
+    
+    document.querySelector('#searchButton').addEventListener("click", filterResults);
+</script>
