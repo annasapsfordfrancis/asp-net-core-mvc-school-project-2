@@ -12,5 +12,6 @@ namespace SchoolProject.Services.Interfaces
         Task<User> GetUser(int id);
         Task<List<User>> GetUsers();
         Task<UserViewModel> GetUserViewModel(int id);
+       Task<UserListViewModel> GetUserListViewModel(UserListViewModel viewModel = null);
     }
 }

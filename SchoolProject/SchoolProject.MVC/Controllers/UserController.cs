@@ -20,9 +20,17 @@ namespace SchoolProject.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var users = await _userService.GetUsers();
+            var viewModel = await _userService.GetUserListViewModel();
 
-            return View(users);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(UserListViewModel viewModel)
+        {
+            var userList = await _userService.GetUserListViewModel(viewModel);
+
+            return View(userList);
         }
 
 

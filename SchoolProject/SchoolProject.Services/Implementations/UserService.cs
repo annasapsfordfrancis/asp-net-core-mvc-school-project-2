@@ -80,5 +80,56 @@ namespace SchoolProject.Services.Implementations
 
             return viewModel;
         }
+
+        public async Task<UserListViewModel> GetUserListViewModel(UserListViewModel viewModel = null)
+        {
+            if (viewModel == null)
+            {
+                viewModel = new UserListViewModel();
+            }
+
+            viewModel.SchoolList = await _context.School.ToListAsync();
+            viewModel.UserTypeList = await _context.UserType.ToListAsync();
+
+            var filteredUserList = await GetFilteredUsers(viewModel.SelectedSchoolId, viewModel.SelectedUserTypeId);
+
+            viewModel.UserResults = filteredUserList;
+
+            return viewModel;
+        }
+
+        private async Task<List<User>> GetFilteredUsers(int? schoolId, int? userTypeId)
+        {
+            var filteredUserList = new List<User>();
+
+            bool schoolIdIsSet = (schoolId != 0 && schoolId != null) ? true : false;
+            bool userTypeIdIsSet = (userTypeId != 0 && userTypeId != null) ? true : false;
+
+            // Only schoolId is set
+            if(schoolIdIsSet && !userTypeIdIsSet)
+            {
+                filteredUserList.AddRange(await _context.User.Where(a => a.SchoolId == schoolId).Include(a => a.School).Include(a => a.UserType).ToListAsync());
+            }
+
+            // Only userTypeId is set
+            else if (userTypeIdIsSet && !schoolIdIsSet)
+            {
+                filteredUserList.AddRange(await _context.User.Where(a => a.UserTypeId == userTypeId).Include(a => a.School).Include(a => a.UserType).ToListAsync());
+            }
+
+            // Both schoolId and userTypeId are set
+            else if (schoolIdIsSet && userTypeIdIsSet)
+            {
+                filteredUserList.AddRange(await _context.User.Where(a => a.SchoolId == schoolId).Where(a => a.UserTypeId == userTypeId).Include(a => a.School).Include(a => a.UserType).ToListAsync());
+            }
+
+            // No filter is set -> return all users
+            else
+            {
+                filteredUserList = await GetUsers();
+            }
+
+            return filteredUserList;
+        }
     }
 }

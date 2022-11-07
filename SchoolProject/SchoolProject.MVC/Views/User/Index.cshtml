@@ -1,14 +1,36 @@
-﻿@using SchoolProject.Models
-@model IEnumerable<User>
+﻿@model SchoolProject.Models.UserListViewModel
+
 @{
     ViewData["Title"] = "Users";
 }
 
 <div>
     <h1 class="display-4 text-center">@ViewData["Title"]</h1>
-    <table class="table table-bordered table-striped table s-m">
-        <partial name="_UserTablePartial" for="@Model" />
-    </table>
+    <form asp-action="Index">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label asp-for="@Model.SelectedSchoolId" class="control-label float-start">School</label>
+                    <select asp-items="@(new SelectList(Model.SchoolList, "SchoolId", "SchoolName", Model.SelectedSchoolId))" asp-for="@Model.SelectedSchoolId" class="form-control">
+                        <option value="0">Select Option</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.SelectedUserTypeId" class="control-label float-start">User Type</label>
+                    <select asp-items="@(new SelectList(Model.UserTypeList, "UserTypeId", "UserTypeName", Model.SelectedUserTypeId))" asp-for="@Model.SelectedUserTypeId" class="form-control">
+                        <option value="0">Select Option</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-end mt-3">
+            <div class="col">
+                <button type="submit" class="btn btn-primary float-end ms-3">Search</button>
+            </div>
+        </div>
+    </form>
+    <partial name="_UserTablePartial" for="@Model.UserResults" />
+
 
 
     <div class="text-center"><a asp-controller="User" asp-action="Create" class="btn btn-secondary">New</a></div>
