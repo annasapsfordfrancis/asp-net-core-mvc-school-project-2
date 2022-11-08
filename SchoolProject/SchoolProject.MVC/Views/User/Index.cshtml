@@ -40,16 +40,12 @@
     function filterResults(event)
     {
         event.preventDefault();
-        let selectedSchool = document.querySelector('#SchoolSelect').value
-        let selectedUserType = document.querySelector('#UserTypeSelect').value
-
-        console.log(`selectedSchool: ${selectedSchool}`);
-        console.log(`selectedUserType: ${selectedUserType}`);
+        let selectedSchool = document.querySelector('#SchoolSelect').value;
+        let selectedUserType = document.querySelector('#UserTypeSelect').value;
 
         fetch(`@Url.Action("FilterUserResultsTable", "User")?schoolId=${selectedSchool}&userTypeId=${selectedUserType}`)
         .then((response) => { return response.text(); })
         .then((result) => {
-                console.log(result);
                 document.querySelector('#filteredUsers').innerHTML = result;
         });
     }

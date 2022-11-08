@@ -36,8 +36,6 @@ namespace SchoolProject.MVC.Controllers
         // Called by front end to get filtered user results
         public async Task<IActionResult> FilterUserResultsTable(int? schoolId, int? userTypeId)
         {
-            Console.WriteLine("schoolId: " + schoolId);
-            Console.WriteLine("userTypeId: " + userTypeId);
             var userList = await _userService.GetFilteredUsers(schoolId:schoolId, userTypeId:userTypeId);
             
             return PartialView("_UserTablePartial", userList);
